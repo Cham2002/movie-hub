@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Comment Box</title>
+  <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+  <div id="app">
+    <h1>Comment Box</h1>
+
+    <div class="comments">
+      
+      <ul>
+        <li v-for="(comment, index) in comments" :key="index">
+         Comment: {{ comment }}
+    
+        </li>
+        <li v-for="(name, index) in names" :key="index">
+          Name: {{name}}
+         </li>
+      </ul>
+    </div>
+
+    <div class="fill">
+      <h2>Enter your comment:</h2>
+      <form @submit.prevent="addComment">
+        <label for="comment">Comment:</label>
+        <input type="text" id="comment" v-model="newComment">
+        <button type="submit">Submit</button>
+      </form>
+      <br>
+      
+      <form @submit.prevent="addname">
+        <label for="name">Name:</label>
+        <input type="text" id="comment" v-model="newname">
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          comments: [
+           
+          ],
+          newComment: '',
+          names: [
+
+          ],
+          newname:''
+        }
+      },
+      methods: {
+        addComment() {
+          if (this.newComment.trim() !== '') {
+            this.comments.push(this.newComment)
+            this.newComment = ''
+          }
+        },
+        addname() {
+          if (this.newname.trim() !== '') {
+            this.names.push(this.newname)
+            this.newname = ''
+          }
+        }
+      }
+    })
+    app.mount('#app')
+  </script>
+
+  <style>
+    body{
+      background-color: bisque;
+    }
+    .comments {
+      margin-bottom: 15px;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 15px;
+    }
+
+    form label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    form input[type="text"] {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    form button[type="submit"] {
+      display: block;
+      margin-top: 10px;
+    }
+    button{
+      padding: 10px 20px;
+      cursor: pointer;
+      background-color: rgb(95, 95, 245);
+      color: white;
+    }
+  </style>
+</body>
+</html>
+
