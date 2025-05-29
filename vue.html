@@ -3,37 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <title>Comment Box</title>
-  <script src="https://unpkg.com/vue@next"></script>
+  <script src="https://unpkg.com/vue@3"></script>
 </head>
 <body>
   <div id="app">
     <h1>Comment Box</h1>
 
     <div class="comments">
-      
       <ul>
-        <li v-for="(comment, index) in comments" :key="index">
-         Comment: {{ comment }}
-    
+        <li v-for="(item, index) in comments" :key="index">
+          <strong>{{ item.name }}</strong>: {{ item.comment }}
         </li>
-        <li v-for="(name, index) in names" :key="index">
-          Name: {{name}}
-         </li>
       </ul>
     </div>
 
     <div class="fill">
       <h2>Enter your comment:</h2>
       <form @submit.prevent="addComment">
+        <label for="name">Name:</label>
+        <input type="text" id="name" v-model="newName">
+
         <label for="comment">Comment:</label>
         <input type="text" id="comment" v-model="newComment">
-        <button type="submit">Submit</button>
-      </form>
-      <br>
-      
-      <form @submit.prevent="addname">
-        <label for="name">Name:</label>
-        <input type="text" id="comment" v-model="newname">
+
         <button type="submit">Submit</button>
       </form>
     </div>
@@ -43,73 +35,79 @@
     const app = Vue.createApp({
       data() {
         return {
-          comments: [
-           
-          ],
-          newComment: '',
-          names: [
-
-          ],
-          newname:''
+          comments: [],
+          newName: '',
+          newComment: ''
         }
       },
       methods: {
         addComment() {
-          if (this.newComment.trim() !== '') {
-            this.comments.push(this.newComment)
-            this.newComment = ''
-          }
-        },
-        addname() {
-          if (this.newname.trim() !== '') {
-            this.names.push(this.newname)
-            this.newname = ''
+          if (this.newName.trim() !== '' && this.newComment.trim() !== '') {
+            this.comments.push({
+              name: this.newName,
+              comment: this.newComment
+            });
+            this.newName = '';
+            this.newComment = '';
           }
         }
       }
-    })
-    app.mount('#app')
+    });
+
+    app.mount('#app');
   </script>
 
   <style>
-    body{
+    body {
       background-color: bisque;
+      font-family: Arial, sans-serif;
+      padding: 20px;
     }
+
     .comments {
-      margin-bottom: 15px;
+      margin-bottom: 20px;
     }
 
     ul {
       list-style: none;
-      margin: 0;
       padding: 0;
     }
 
     li {
-      margin-bottom: 15px;
+      background: white;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     }
 
     form label {
       display: block;
+      margin-top: 10px;
       margin-bottom: 5px;
     }
 
     form input[type="text"] {
       width: 100%;
-      margin-bottom: 10px;
+      padding: 8px;
+      box-sizing: border-box;
+      border-radius: 4px;
+      border: 1px solid #ccc;
     }
 
-    form button[type="submit"] {
-      display: block;
+    button {
       margin-top: 10px;
-    }
-    button{
       padding: 10px 20px;
-      cursor: pointer;
       background-color: rgb(95, 95, 245);
       color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: rgb(68, 68, 216);
     }
   </style>
 </body>
 </html>
-
